@@ -1,4 +1,4 @@
-comment = 'flame:  Created by pgrx'
+comment = 'flame:  HAI.AI'
 default_version = '@CARGO_VERSION@'
 module_pathname = '$libdir/flame'
 relocatable = false

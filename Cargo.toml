@@ -1,12 +1,15 @@
+cargo-features = ["edition2024"]
+
 [package]
 name = "flame"
-version = "0.0.0"
-edition = "2021"
+version = "0.0.1"
+edition = "2024"
 
 [lib]
 crate-type = ["cdylib"]
 
 [features]
+
 default = ["pg13"]
 pg11 = ["pgrx/pg11", "pgrx-tests/pg11" ]
 pg12 = ["pgrx/pg12", "pgrx-tests/pg12" ]
@@ -17,7 +20,14 @@ pg16 = ["pgrx/pg16", "pgrx-tests/pg16" ]
 pg_test = []
 
 [dependencies]
+anyhow = "1.0.79"
+candle = { git = "https://github.com/huggingface/candle.git", version = "0.4.0", package = "candle-core", features = ["cuda"] }
+candle_nn = { git = "https://github.com/huggingface/candle.git", version = "0.4.0", package = "candle-nn", features = ["cuda"] }
+hf_hub = { version = "0.3.2", package = "hf-hub", features = ["tokio"] }
+lazy_static = "1.4.0"
 pgrx = "=0.11.3"
+serde_json = "1.0.113"
+tokenizers = { version = "0.15.2", features = ["hf-hub"] }
 
 [dev-dependencies]
 pgrx-tests = "=0.11.3"

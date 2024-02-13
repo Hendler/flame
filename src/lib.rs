@@ -1,10 +1,12 @@
+mod hf_embeddings;
+use hf_embeddings::create_embeddings;
 use pgrx::prelude::*;
 
 pgrx::pg_module_magic!();
 
 #[pg_extern]
-fn hello_flame() -> &'static str {
-    "Hello, flame"
+fn hello_flame(sentences: Vec<String>) -> &'static str {
+    let embeddings = create_embeddings(sentences).expect("could not get embeddings");
 }
 
 #[cfg(any(test, feature = "pg_test"))]
