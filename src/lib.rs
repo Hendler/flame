@@ -5,8 +5,9 @@ use pgrx::prelude::*;
 pgrx::pg_module_magic!();
 
 #[pg_extern]
-fn hello_flame(sentences: Vec<String>) -> &'static str {
+fn hf_embeddings(sentences: Vec<String>) -> &'static str {
     let embeddings = create_embeddings(sentences).expect("could not get embeddings");
+    return embeddings
 }
 
 #[cfg(any(test, feature = "pg_test"))]
@@ -16,7 +17,8 @@ mod tests {
 
     #[pg_test]
     fn test_hello_flame() {
-        assert_eq!("Hello, flame", crate::hello_flame());
+        let sentences: Vec<String> = vec![String::from("Hello"), String::from("World")];
+        let embeddings = crate::hf_embeddings(sentences)
     }
 
 }
