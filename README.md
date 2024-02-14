@@ -1,6 +1,6 @@
 # FLAME
 
-Flame is named for its ambition to use HuggingFace's Candle library.
+Flame is named for its ambition to use HuggingFace's [Candle](https://github.com/huggingface/candle) library.
 
 Currently this is a proof of concept Postgresql plugin for text embeddings.
 Goal is to use Flame with PGVector for faster RAG applications in Postgresql.
