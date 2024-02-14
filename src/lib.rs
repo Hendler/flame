@@ -5,8 +5,6 @@ pgrx::pg_module_magic!();
 
 use fastembed::{EmbeddingBase};
 
-
-
 #[pg_extern]
 fn fast_embed(sentence: String) -> Vec<Option<f32>> {
     let documents = vec![sentence];
@@ -26,8 +24,6 @@ fn fast_embed(sentence: String) -> Vec<Option<f32>> {
         }
     }
 }
-
-
 
 
 // #[cfg(any(test, feature = "pg_test"))]

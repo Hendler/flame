@@ -1,4 +1,4 @@
-# cargo-features = ["edition2024"]
+cargo-features = ["edition2024"]
 
 [package]
 name = "flame"
@@ -21,9 +21,20 @@ pg_test = []
 
 [dependencies]
 anyhow = "1.0.79"
+# features = ["cuda"]
+candle = { git = "https://github.com/huggingface/candle.git", version = "0.4.0", package = "candle-core"}
+candle-transformers = "0.3.3"
+# features = ["cuda"]
+candle_nn = { git = "https://github.com/huggingface/candle.git", version = "0.4.0", package = "candle-nn" }
+chrono = { version = "0.4.34", features = ["serde"] }
+clap = "4.5.0"
 fastembed = "2.0.1"
+hf_hub = { version = "0.3.2", package = "hf-hub", features = ["tokio"] }
 lazy_static = "1.4.0"
 pgrx = "=0.11.3"
+serde = { version = "1.0.196", features = ["derive"] }
+serde_json = "1.0.113"
+tokenizers = { version = "0.15.2", features = ["hf-hub"] }
 
 [dev-dependencies]
 pgrx-tests = "=0.11.3"
