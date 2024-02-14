@@ -132,7 +132,7 @@ impl T5ModelBuilder {
         let tokenizer_filename = api.get("tokenizer.json")?;
         let weights_filename = if model_id == "google/flan-t5-xxl" || model_id == "google/flan-ul2"
         {
-            candle_examples::hub_load_safetensors(&api, "model.safetensors.index.json")?
+            hub_load_safetensors(&api, "model.safetensors.index.json")?
         } else {
             vec![api.get("model.safetensors")?]
         };
@@ -165,4 +165,31 @@ impl T5ModelBuilder {
     }
 }
 
+
+/// Loads the safetensors files for a model from the hub based on a json index file.
+pub fn hub_load_safetensors(
+    repo: &hf_hub::api::sync::ApiRepo,
+    json_file: &str,
+) -> Result<Vec<std::path::PathBuf>> {
+    let json_file = repo.get(json_file).map_err(candle::Error::wrap)?;
+    let json_file = std::fs::File::open(json_file)?;
+    let json: serde_json::Value =
+        serde_json::from_reader(&json_file).map_err(candle::Error::wrap)?;
+    let weight_map = match json.get("weight_map") {
+        None => candle::bail!("no weight map in {json_file:?}").into(),
+        Some(serde_json::Value::Object(map)) => map,
+        Some(_) => candle::bail!("weight map in {json_file:?} is not a map").into(),
+    };
+    let mut safetensors_files = std::collections::HashSet::new();
+    for value in weight_map.values() {
+        if let Some(file) = value.as_str() {
+            safetensors_files.insert(file.to_string());
+        }
+    }
+    let safetensors_files = safetensors_files
+        .iter()
+        .map(|v| repo.get(v).map_err(candle::Error::wrap))
+        .collect::<Result<Vec<_>>>()?;
+    Ok(safetensors_files)
+}
 

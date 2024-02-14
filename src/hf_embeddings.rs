@@ -2,8 +2,7 @@ const MODEL_ID: &str = "intfloat/multilingual-e5-large";
 const REVISION: &str = "main";
 
 use anyhow::{Error as E, Result as R};
-use candle::Module;
-use candle::{DType, Device, Result, Tensor};
+use candle::{DType, Device, Result, Tensor, Module};
 use candle_nn::{Embedding, VarBuilder};
 use hf_hub::{api::sync::Api, Repo, RepoType};
 use lazy_static::lazy_static;
@@ -37,7 +36,7 @@ fn init_model() -> R<BertModel> {
     let weights = unsafe { candle::safetensors::MmapedFile::new(weights_filename)? };
     let weights = weights.deserialize()?;
     let device = Device::Cpu;
-    let vb = VarBuilder::from_tensors(vec![weights], DTYPE, &device);
+    let vb = VarBuilder::from_safetensors(vec![weights], DTYPE, &device);
     Ok(BertModel::load(vb, &config)?)
 }
 
