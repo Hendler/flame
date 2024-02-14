@@ -37,8 +37,42 @@ fn init_model() -> R<BertModel> {
     let weights = unsafe { candle::safetensors::MmapedFile::new(weights_filename)? };
     let weights = weights.deserialize()?;
     let device = Device::Cpu;
-    let vb = VarBuilder::from_safetensors(vec![weights], DTYPE, &device);
+    let vb = VarBuilder::from_tensors(vec![weights], DTYPE, &device);
     Ok(BertModel::load(vb, &config)?)
+}
+
+
+
+pub fn create_embedding(sentence: String) -> R<Vec<f32>> {
+    let model = &*MODEL;
+    let tokenizer = &mut *TOKENIZER.clone();
+    let device = &model.device;
+
+    if let Some(pp) = tokenizer.get_padding_mut() {
+        pp.strategy = tokenizers::PaddingStrategy::BatchLongest
+    } else {
+        let pp = PaddingParams {
+            strategy: tokenizers::PaddingStrategy::BatchLongest,
+            ..Default::default()
+        };
+        tokenizer.with_padding(Some(pp));
+    }
+    let tokens = tokenizer.encode(sentence, true).map_err(E::msg)?;
+    let token_ids = tokens.get_ids().to_vec();
+    let tokens =  Ok(Tensor::new(tokens.as_slice(), device)?);
+    // ::<Result<Vec<_f32>>>()?;;
+
+
+
+    let token_ids = Tensor::stack(&token_ids, 0)?;
+    let token_type_ids = token_ids.zeros_like()?;
+    let embeddings = model.forward(&token_ids, &token_type_ids)?;
+    // avg pooling
+    let (_n_sentence, n_tokens, _hidden_size) = embeddings.dims3()?;
+    let embeddings = (embeddings.sum(1)? / (n_tokens as f64))?;
+    // normalization
+    let embeddings = normalize_l2(&embeddings)?;
+    Ok(embeddings.to_vec2::<f32>()?)
 }
 
 pub fn create_embeddings(sentences: Vec<String>) -> R<Vec<Vec<f32>>> {

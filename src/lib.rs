@@ -1,27 +1,28 @@
-mod hf_embeddings;
-use hf_embeddings::create_embeddings;
-use pgrx::prelude::*;
+mod t5_embeddings;
+use candle::Tensor;
+use t5_embeddings::{MODEL, init_model};
 
+use pgrx::prelude::*;
 pgrx::pg_module_magic!();
 
-#[pg_extern]
-fn hf_embeddings(sentences: Vec<String>) -> &'static str {
-    let embeddings = create_embeddings(sentences).expect("could not get embeddings");
-    return embeddings
-}
+// #[pg_extern]
+// fn tf_embeddings(sentence: String) -> Vec<Option<f32>> {
 
-#[cfg(any(test, feature = "pg_test"))]
-#[pg_schema]
-mod tests {
-    use pgrx::prelude::*;
+// }
 
-    #[pg_test]
-    fn test_hello_flame() {
-        let sentences: Vec<String> = vec![String::from("Hello"), String::from("World")];
-        let embeddings = crate::hf_embeddings(sentences)
-    }
 
-}
+// #[cfg(any(test, feature = "pg_test"))]
+// #[pg_schema]
+// mod tests {
+//     use pgrx::prelude::*;
+
+//     #[pg_test]
+//     fn test_hello_flame() {
+//         let sentences: Vec<String> = vec![String::from("Hello"), String::from("World")];
+//         let embeddings = crate::hf_embeddings::create_embeddings(sentences);
+//     }
+
+// }
 
 /// This module is required by `cargo pgrx test` invocations.
 /// It must be visible at the root of your extension crate.

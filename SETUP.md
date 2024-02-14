@@ -30,4 +30,9 @@ install candle
     cargo add hf-hub --rename hf_hub --features "tokio"
     cargo add tokenizers --features="hf-hub"
     cargo add serde_json
+    cargo add serde --features derive
+    cargo add chrono --features serde
+    cargo add lazy_static
 
+
+https://github.com/pgcentralfoundation/pgrx/blob/develop/pgrx-examples/arrays/src/lib.rs
