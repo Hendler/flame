@@ -8,8 +8,6 @@ Model chosen is  `MiniLM-L6-v2`, since I was using it already with 768 length.
 
 The proof of concept (v0.0.1) uses [PGRX](https://github.com/pgcentralfoundation/pgrx) and [fastembed-rs](https://github.com/Anush008/fastembed-rs) Rust implementation of [fastembed](https://github.com/qdrant/fastembed)
 
-## contributing
-
 I don't know Rust, or Candle, but would love to see more embeddings... embedded.
 
 ## usage
