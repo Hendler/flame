@@ -13,7 +13,7 @@ setup
     brew uninstall rust
     brew install rustup rustup-init
     rustup-init
-    rustup default nightly && rustup update
+    # rustup default nightly && rustup update (for candle with # cargo-features = ["edition2024"] in toml)
 
 
 install https://github.com/pgcentralfoundation/pgrx
@@ -23,7 +23,7 @@ install https://github.com/pgcentralfoundation/pgrx
      cargo pgrx init
 
 
-install candle
+<!-- install candle
 
     cargo add --git https://github.com/huggingface/candle.git candle-core --rename candle --features "cuda"
     cargo add --git https://github.com/huggingface/candle.git candle-nn --rename candle_nn --features "cuda"
@@ -34,5 +34,5 @@ install candle
     cargo add chrono --features serde
     cargo add lazy_static
 
-
+ -->
 https://github.com/pgcentralfoundation/pgrx/blob/develop/pgrx-examples/arrays/src/lib.rs
