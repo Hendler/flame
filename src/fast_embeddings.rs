@@ -3,7 +3,7 @@ use lazy_static::lazy_static;
 use std::sync::Mutex;
 
 lazy_static! {
-    pub static ref FLAG_EMBEDDING: Mutex<Option<FlagEmbedding>> = Mutex::new(
+    pub static ref FAST_EMBEDDING: Mutex<Option<FlagEmbedding>> = Mutex::new(
         match FlagEmbedding::try_new(InitOptions {
             model_name: EmbeddingModel::AllMiniLML6V2,
             show_download_message: false,
