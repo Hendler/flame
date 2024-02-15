@@ -1,6 +1,6 @@
+use fastembed::{EmbeddingModel, FlagEmbedding, InitOptions};
 use lazy_static::lazy_static;
 use std::sync::Mutex;
-use fastembed::{FlagEmbedding, InitOptions, EmbeddingModel};
 
 lazy_static! {
     pub static ref FLAG_EMBEDDING: Mutex<Option<FlagEmbedding>> = Mutex::new(
@@ -17,4 +17,3 @@ lazy_static! {
         }
     );
 }
-

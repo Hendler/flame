@@ -3,7 +3,7 @@ use fast_embeddings::FLAG_EMBEDDING;
 use pgrx::prelude::*;
 pgrx::pg_module_magic!();
 
-use fastembed::{EmbeddingBase};
+use fastembed::EmbeddingBase;
 
 #[pg_extern]
 fn fast_embed(sentence: String) -> Vec<Option<f32>> {
@@ -24,7 +24,6 @@ fn fast_embed(sentence: String) -> Vec<Option<f32>> {
         }
     }
 }
-
 
 // #[cfg(any(test, feature = "pg_test"))]
 // #[pg_schema]
