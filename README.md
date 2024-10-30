@@ -1,7 +1,5 @@
 # FLAME
 
-Flame is named for its ambition to use HuggingFace's [Candle](https://github.com/huggingface/candle) library.
-
 Currently this is a proof of concept Postgresql plugin for text embeddings.
 Goal is to use Flame with PGVector for faster RAG applications in Postgresql.
 Model chosen is  `MiniLM-L6-v2`, since I was using it already with 768 length.
@@ -9,6 +7,8 @@ Model chosen is  `MiniLM-L6-v2`, since I was using it already with 768 length.
 The proof of concept (v0.0.1) uses [PGRX](https://github.com/pgcentralfoundation/pgrx) and [fastembed-rs](https://github.com/Anush008/fastembed-rs) Rust implementation of [fastembed](https://github.com/qdrant/fastembed)
 
 I don't know Rust, or Candle, but would love to see more embeddings... embedded.
+
+Flame is named for its ambition to use HuggingFace's [Candle](https://github.com/huggingface/candle) library.
 
 ## usage
 
